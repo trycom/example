@@ -7,7 +7,7 @@ import moment from "moment";
 import axios from 'axios';
 
 const partnerApiKey ='partner_b10a8991-56fc-4085-9042-1084ff8f272b';
-const partnerApiEndpoint = 'http://localhost:4000/partner/plans';
+const partnerApiEndpoint = 'https://try-backend-staging.herokuapp.com/partner/plans';
 const useInput = initialState => {
   const [value, setValue] = useState(initialState);
 
@@ -50,10 +50,12 @@ const PaymentForm = props => {
       axios({
         method: 'post',
         url: partnerApiEndpoint,
-        headers: {'x-try-partner-secret': partnerApiKey, contentType: 'application/json'},
+        headers: {
+          'x-try-partner-secret': partnerApiKey,
+          'content-type': 'application/json'},
         data: {
           "idempotent_key":"plan_238909059",
-          "email": "dan@try.com"
+          "email":email 
         }
       }).then(()=>{
         alert(`Success! Your token is: ${token}`);
