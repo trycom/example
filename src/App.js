@@ -37,6 +37,7 @@ const PaymentForm = props => {
       // Within the context of `Elements`, this call to createSource knows which Element to
       // tokenize, since there's only one in this group.
       const token = await props.stripe.createSource({
+        type: 'card',
         owner: {
           name,
           email
