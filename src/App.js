@@ -90,7 +90,7 @@ const InjectedPaymentForm = injectStripe(PaymentForm);
 const PlanForm = props => {
   const totalAmountInput = useInput(0);
   const depositAmountInput = useInput(0);
-  const numberOfInstallmentsInput = useInput(0);
+  const numberOfInstallmentsInput = useInput(1);
   const intervalInput = useInput("month");
   const intervalCountInput = useInput(1);
 
@@ -123,7 +123,8 @@ const PlanForm = props => {
       onChange({
         items,
         hasDeposit: depositAmountInput.value > 0,
-        interval: intervalInput.value.toLowerCase()
+        interval: intervalInput.value.toLowerCase(),
+        intervalCount: Number(intervalCountInput.value)
       });
     }
   }, [
@@ -148,14 +149,7 @@ const PlanForm = props => {
 
       <Form.Group as={Col} controlId="formGridEmail">
         <Form.Label>Number of installments</Form.Label>
-        <Form.Control {...numberOfInstallmentsInput} as="select">
-          <option>Choose...</option>
-          {[...Array(10).keys()]
-            .map(i => i + 1)
-            .map(i => (
-              <option>{i}</option>
-            ))}
-        </Form.Control>
+        <Form.Control {...numberOfInstallmentsInput} placeholder={1} />
       </Form.Group>
 
       <Form.Group as={Col} controlId="formGridPassword">
@@ -170,20 +164,14 @@ const PlanForm = props => {
 
       <Form.Group as={Col} controlId="formGridEmail">
         <Form.Label>Charge frequency</Form.Label>
-        <Form.Control {...intervalCountInput} as="select">
-          {[...Array(10).keys()]
-            .map(i => i + 1)
-            .map(i => (
-              <option>{i}</option>
-            ))}
-        </Form.Control>
+        <Form.Control {...intervalCountInput} placeholder={1} />
       </Form.Group>
     </Form>
   );
 };
 
 const ListPlan = ({
-  list = { items: [], hasDeposit: false, interval: "month" }
+  list = { items: [], hasDeposit: false, interval: "month", intervalCount: 1 }
 }) => (
   <ListGroup
     style={{ marginTop: "5px", marginLeft: "80px", marginRight: "80px" }}
@@ -193,7 +181,11 @@ const ListPlan = ({
         <ListGroup.Item
           variant={i === 0 && list.hasDeposit ? "primary" : "success"}
         >
-          ${amount} due {dueDate.add(i, list.interval).format("MMMM Do YYYY")}.
+          ${amount} due{" "}
+          {dueDate
+            .add(i * list.intervalCount, list.interval)
+            .format("MMMM Do YYYY")}
+          .
         </ListGroup.Item>
       );
     })}
