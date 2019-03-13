@@ -54,8 +54,16 @@ const PaymentForm = props => {
           'x-try-partner-secret': partnerApiKey,
           'content-type': 'application/json'},
         data: {
-          "idempotent_key":"plan_238909059",
-          "email":email 
+            "idempotent_key":"plan_2389090559",
+            "email": "dan2@try.com",
+            "source_token": "tok_mastercard",
+            "amount": 2000,
+            "deposit": 10,
+            "currency": "usd",
+            "payments": {
+            
+            },
+            "customer_id": "cus_ES6d7MqFCQjbth"
         }
       }).then(()=>{
         alert(`Success! Your token is: ${token}`);
