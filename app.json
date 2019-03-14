@@ -3,12 +3,15 @@
 
   ],
   "buildpacks": [
-
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs"
+    }
   ],
   "description": "Try partner example application",
   "env": {
   },
   "formation": {
+    "web": {"quantity": 1}
   },
   "name": "example",
   "scripts": {
