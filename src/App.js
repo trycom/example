@@ -6,7 +6,7 @@ import { Container, Button, Row, Form, Col, ListGroup } from "react-bootstrap";
 import moment from "moment";
 import axios from 'axios';
 
-const partnerApiKey ='partner_b10a8991-56fc-4085-9042-1084ff8f272b';
+const partnerApiKey ='partner_stage_5o4smvUpZ6aQi0siOeqWQk';
 const partnerApiEndpoint = 'https://try-backend-staging.herokuapp.com/partner/plans';
 const useInput = initialState => {
   const [value, setValue] = useState(initialState);
@@ -22,9 +22,9 @@ const useInput = initialState => {
 };
 
 const PaymentForm = props => {
-  const emailInput = useInput();
   const firstNameInput = useInput();
   const lastNameInput = useInput();
+  const emailInput = useInput();
 
   const { value: firstName } = firstNameInput;
   const { value: lastName } = lastNameInput;
@@ -47,26 +47,32 @@ const PaymentForm = props => {
         }
       });
 
+      console.log(props.list);
+
       axios({
         method: 'post',
         url: partnerApiEndpoint,
         headers: {
           'x-try-partner-secret': partnerApiKey,
-          'content-type': 'application/json'},
+          'content-type': 'application/json'
+        },
         data: {
-            "idempotent_key":"plan_2389090559",
+            idempotent_key: "plan_2389090559",
             email,
-            "source_token": "tok_mastercard",
-            "amount": 2000,
-            "deposit": 10,
-            "currency": "usd",
-            "payments": {
-            
+            source_token: "tok_mastercard",
+            total_amount: props.list.totalAmount,
+            deposit: props.list.depositAmount,
+            currency: "usd",
+            payments: {
+              installments: props.list.numberOfInstallments,
+              interval_count: props.list.intervalCount,
+              interval: props.list.interval
             },
             "customer_id": "cus_ES6d7MqFCQjbth"
         }
-      }).then(()=>{
+      }).then((res)=>{
         alert(`Success! Your token is: ${token}`);
+        console.log(res);
       })
 
     } catch (err) {
@@ -147,6 +153,9 @@ const PlanForm = props => {
 
       onChange({
         items,
+        totalAmount,
+        depositAmount,
+        numberOfInstallments,
         hasDeposit: depositAmountInput.value > 0,
         interval: intervalInput.value.toLowerCase(),
         intervalCount: Number(intervalCountInput.value)

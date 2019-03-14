@@ -6,7 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import { StripeProvider } from "react-stripe-elements";
 
 ReactDOM.render(
-  <StripeProvider apiKey="pk_test_12345">
+  <StripeProvider apiKey="pk_test_cVBSJtCi8RIkzE8cLtphtXTy">
     <App />
   </StripeProvider>,
   document.getElementById("root")
