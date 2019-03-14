@@ -55,7 +55,7 @@ const PaymentForm = props => {
           'content-type': 'application/json'},
         data: {
             "idempotent_key":"plan_2389090559",
-            "email": "dan2@try.com",
+            email,
             "source_token": "tok_mastercard",
             "amount": 2000,
             "deposit": 10,
