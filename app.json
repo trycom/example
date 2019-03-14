@@ -1,0 +1,17 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ],
+  "description": "Try partner example application",
+  "env": {
+  },
+  "formation": {
+  },
+  "name": "example",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
