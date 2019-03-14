@@ -47,8 +47,6 @@ const PaymentForm = props => {
         }
       });
 
-      console.log(props.list);
-
       axios({
         method: 'post',
         url: partnerApiEndpoint,
